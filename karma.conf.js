@@ -23,7 +23,7 @@ module.exports = function(config) {
     exclude: [
       'karma.conf.js',
       'gruntfile.js',
-      'webpack.conf.js'
+      'webpack.config.js'
     ],
 
 
@@ -42,9 +42,24 @@ module.exports = function(config) {
         require('karma-opera-launcher')
     ],
     webpackMiddleware:{
-        noInfo:false
+        noInfo:true
     },
-
+    webpack:{
+        output:{
+            path:__dirname+'/lib/',
+            filename:'dist.js'
+        },
+        module:{
+            loaders:[
+                {
+                    test:/\.js$/,
+                    exclude:/node_modules/,
+                    loader:'babel-loader',
+                    query:{presets:['es2015']}
+                }
+            ]
+        }
+    },
     // test results reporter to use
     // possible values: 'dots', 'progress'
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
@@ -70,7 +85,7 @@ module.exports = function(config) {
 
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-    browsers: ['Chrome','IE','Firefox','Opera'],
+    browsers: ['Chrome','IE'],
 
 
     // Continuous Integration mode
